@@ -30,8 +30,13 @@ args = parser.parse_args()
 
 city = args.city
 
+additon = '%2C'
+
+if args.NR:
+   additon += 'NORTH+RHINE-WESTPHALIA'
+
 #Get-Request for lat and lng
-response = requests.get("https://www.mapquestapi.com/geocoding/v1/address?key=" + str(key) + "&inFormat=kvp&outFormat=json&location=" + city + "%2CGermany&thumbMaps=false")
+response = requests.get("https://www.mapquestapi.com/geocoding/v1/address?key=" + str(key) + "&inFormat=kvp&outFormat=json&location=" + city + additon + "%2CGermany&thumbMaps=false")
 
 #Json evaluation
 json_data = json.loads(response.text)
