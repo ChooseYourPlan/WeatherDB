@@ -29,45 +29,84 @@ parser.add_argument('-TH','--Thueringen',dest = 'TH',action = 'store_true', help
 args = parser.parse_args()
 
 city = args.city
+def get_state():
+    #Address Addition
+    addition = '%2C'
 
-#Address Addition
-additon = '%2C'
+    if args.BW:
+        addition += 'BADEN-W\xc3RTTEMBERG'
+    elif args.BY:
+        addition += 'FREE+STATE+OF+BAVARIA'
+    elif args.BE:
+        addition += 'BERLIN'
+    elif args.BB:
+        addition += 'BRANDENBURG'
+    elif args.HV:
+        addition += 'FREE+HANSEATIC+CITY+OF+BREMEN'
+    elif args.HH:
+        addition += 'HAMBURG'
+    elif args.HE:
+        addition += 'THURINGIA'
+    elif args.MV:
+        addition += 'MECKLENBURG-VORPOMMERN'
+    elif args.NI:
+        addition += 'LOWER SAXONY'
+    elif args.NW:
+        addition += 'NORTH+RHINE-WESTPHALIA'
+    elif args.RP:
+        addition += 'RHINELAND-PALATINATE'
+    elif args.SL:
+        addition += 'SAARLAND'
+    elif args.SN:
+        addition += 'SAXONY'
+    elif args.ST:
+        addition += 'SAXONY-ANHALT'
+    elif args.SH:
+        addition += 'SCHLESWIG-HOLSTEIN'
+    elif args.TH:
+        addition += 'THURINGIA'
+    return addition
+def get_state():
+    #Address Addition
+    addition = '%2C'
 
-if args.BW:
-   addition += 'BADEN-W\xc33RTTEMBERG'
-elif args.BY:
-   additon += 'FREE+STATE+OF+BAVARIA'
-elif args.BE:
-   additon += 'BERLIN'
-elif args.BB:
-   additon += 'BRANDENBURG'
-elif args.HV:
-   additon += 'FREE+HANSEATIC+CITY+OF+BREMEN'
-elif args.HH:
-   additon += 'HAMBURG'
-elif args.HE:
-   additon += 'THURINGIA'
-elif args.MV:
-   additon += 'MECKLENBURG-VORPOMMERN'
-elif args.NI:
-   additon += 'LOWER SAXONY'
-elif args.NW:
-     additon += 'NORTH+RHINE-WESTPHALIA'
-elif args.RP:
-   additon += 'RHINELAND-PALATINATE'
-elif args.SL:
-   additon += 'SAARLAND'
-elif args.SN:
-   additon += 'SAXONY'
-elif args.ST:
-   additon += 'SAXONY-ANHALT'
-elif args.SH:
-   additon += 'SCHLESWIG-HOLSTEIN'
-elif args.TH:
-   additon += 'THURINGIA'
+    if args.BW:
+        addition += 'BADEN-W\xc3RTTEMBERG'
+    elif args.BY:
+        addition += 'FREE+STATE+OF+BAVARIA'
+    elif args.BE:
+        addition += 'BERLIN'
+    elif args.BB:
+        addition += 'BRANDENBURG'
+    elif args.HV:
+        addition += 'FREE+HANSEATIC+CITY+OF+BREMEN'
+    elif args.HH:
+        addition += 'HAMBURG'
+    elif args.HE:
+        addition += 'THURINGIA'
+    elif args.MV:
+        addition += 'MECKLENBURG-VORPOMMERN'
+    elif args.NI:
+        addition += 'LOWER SAXONY'
+    elif args.NW:
+        addition += 'NORTH+RHINE-WESTPHALIA'
+    elif args.RP:
+        addition += 'RHINELAND-PALATINATE'
+    elif args.SL:
+        addition += 'SAARLAND'
+    elif args.SN:
+        addition += 'SAXONY'
+    elif args.ST:
+        addition += 'SAXONY-ANHALT'
+    elif args.SH:
+        addition += 'SCHLESWIG-HOLSTEIN'
+    elif args.TH:
+        addition += 'THURINGIA'
+    return addition
 
+state = get_state()
 #Get-Request for lat and lng
-response = requests.get("https://www.mapquestapi.com/geocoding/v1/address?key=" + str(key) + "&inFormat=kvp&outFormat=json&location=" + city + additon + "%2CGermany&thumbMaps=false")
+response = requests.get("https://www.mapquestapi.com/geocoding/v1/address?key=" + str(key) + "&inFormat=kvp&outFormat=json&location=" + city + state + "%2CGermany&thumbMaps=false")
 
 #Json evaluation
 json_data = json.loads(response.text)
