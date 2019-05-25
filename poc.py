@@ -1,10 +1,13 @@
 import requests
 import json 
 import argparse
+import getstate as gs
 
+def get_apik():
 #Get Api-Key from File
-key_file = open("key.txt","r")
-key = key_file.read()
+    key_file = open("key.txt","r")
+    key = key_file.read()
+    return key
 
 #CLI-Arguments
 parser = argparse.ArgumentParser(description='lat and lng getter')
@@ -26,96 +29,33 @@ parser.add_argument('-ST','--Sachsen-Anhalt',dest = 'ST',action = 'store_true', 
 parser.add_argument('-SH','--Schleswig-Holstein',dest = 'SH',action = 'store_true', help = 'Schleswig-Holstein')
 parser.add_argument('-TH','--Thueringen',dest = 'TH',action = 'store_true', help = 'Thueringen')
 
-args = parser.parse_args()
-
-city = args.city
-def get_state():
-    #Address Addition
-    addition = '%2C'
-
-    if args.BW:
-        addition += 'BADEN-W\xc3RTTEMBERG'
-    elif args.BY:
-        addition += 'FREE+STATE+OF+BAVARIA'
-    elif args.BE:
-        addition += 'BERLIN'
-    elif args.BB:
-        addition += 'BRANDENBURG'
-    elif args.HV:
-        addition += 'FREE+HANSEATIC+CITY+OF+BREMEN'
-    elif args.HH:
-        addition += 'HAMBURG'
-    elif args.HE:
-        addition += 'THURINGIA'
-    elif args.MV:
-        addition += 'MECKLENBURG-VORPOMMERN'
-    elif args.NI:
-        addition += 'LOWER SAXONY'
-    elif args.NW:
-        addition += 'NORTH+RHINE-WESTPHALIA'
-    elif args.RP:
-        addition += 'RHINELAND-PALATINATE'
-    elif args.SL:
-        addition += 'SAARLAND'
-    elif args.SN:
-        addition += 'SAXONY'
-    elif args.ST:
-        addition += 'SAXONY-ANHALT'
-    elif args.SH:
-        addition += 'SCHLESWIG-HOLSTEIN'
-    elif args.TH:
-        addition += 'THURINGIA'
-    return addition
-def get_state():
-    #Address Addition
-    addition = '%2C'
-
-    if args.BW:
-        addition += 'BADEN-W\xc3RTTEMBERG'
-    elif args.BY:
-        addition += 'FREE+STATE+OF+BAVARIA'
-    elif args.BE:
-        addition += 'BERLIN'
-    elif args.BB:
-        addition += 'BRANDENBURG'
-    elif args.HV:
-        addition += 'FREE+HANSEATIC+CITY+OF+BREMEN'
-    elif args.HH:
-        addition += 'HAMBURG'
-    elif args.HE:
-        addition += 'THURINGIA'
-    elif args.MV:
-        addition += 'MECKLENBURG-VORPOMMERN'
-    elif args.NI:
-        addition += 'LOWER SAXONY'
-    elif args.NW:
-        addition += 'NORTH+RHINE-WESTPHALIA'
-    elif args.RP:
-        addition += 'RHINELAND-PALATINATE'
-    elif args.SL:
-        addition += 'SAARLAND'
-    elif args.SN:
-        addition += 'SAXONY'
-    elif args.ST:
-        addition += 'SAXONY-ANHALT'
-    elif args.SH:
-        addition += 'SCHLESWIG-HOLSTEIN'
-    elif args.TH:
-        addition += 'THURINGIA'
-    return addition
-
-state = get_state()
+def get_request(city,state,key):
 #Get-Request for lat and lng
-response = requests.get("https://www.mapquestapi.com/geocoding/v1/address?key=" + str(key) + "&inFormat=kvp&outFormat=json&location=" + city + state + "%2CGermany&thumbMaps=false")
+    response = requests.get("https://www.mapquestapi.com/geocoding/v1/address?key=" + str(key) + "&inFormat=kvp&outFormat=json&location=" + city + state + "%2CGermany&thumbMaps=false")
+    return response
 
+def get_jsond(json_data):
 #Json evaluation
-json_data = json.loads(response.text)
+    json_data = json.loads(response.text)
 
-bundesland = json_data['results'][0]['locations'][0]['adminArea3']
-lat  = json_data['results'][0]['locations'][0]['latLng']['lat']
-lng  = json_data['results'][0]['locations'][0]['latLng']['lng']
+    bundesland = json_data['results'][0]['locations'][0]['adminArea3']
+    lat  = json_data['results'][0]['locations'][0]['latLng']['lat']
+    lng  = json_data['results'][0]['locations'][0]['latLng']['lng']
 
+    info_list = [bundesland,lat,lng];
+    return info_list
+
+def ausgabe(info_list):
 #Print to console
-print bundesland
-print lat
-print lng 
+   print info_list[0]
+   print info_list[1]
+   print info_list[2]
+
+if __name__ == '__main__':
+    key = get_apik()
+    args = parser.parse_args()
+    city = args.city
+    state = gs.get_state(args) 
+    response = get_request(city,state,key) 
+    info_list = get_jsond(response)
+    ausgabe(info_list)
