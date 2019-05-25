@@ -1,7 +1,7 @@
 import requests
 import json 
 import argparse
-import getstate as gs
+import statebyargs as stba
 
 def get_apik():
 #Get Api-Key from File
@@ -34,7 +34,7 @@ def get_request(city,state,key):
     response = requests.get("https://www.mapquestapi.com/geocoding/v1/address?key=" + str(key) + "&inFormat=kvp&outFormat=json&location=" + city + state + "%2CGermany&thumbMaps=false")
     return response
 
-def get_jsond(json_data):
+def get_jsond(response):
 #Json evaluation
     json_data = json.loads(response.text)
 
@@ -51,11 +51,17 @@ def ausgabe(info_list):
    print info_list[1]
    print info_list[2]
 
-if __name__ == '__main__':
+
+
+def main():
     key = get_apik()
     args = parser.parse_args()
     city = args.city
-    state = gs.get_state(args) 
+    state = stba.get_state(args) 
     response = get_request(city,state,key) 
     info_list = get_jsond(response)
     ausgabe(info_list)
+    return info_list
+
+if __name__ == '__main__':
+    main()
