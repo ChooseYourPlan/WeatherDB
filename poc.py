@@ -3,6 +3,7 @@ import json
 import argparse
 import statebyargs as stba
 import weathload as wl
+import valuesbydata as vbd
 
 def get_apik():
 #Get Api-Key from File
@@ -62,7 +63,9 @@ def main():
     response = get_request(city,state,key) 
     info_list = get_jsond(response)
     ausgabe(info_list)
-    wl.get_weather(info_list)
+    data = wl.get_weather(info_list)
+    values = vbd.get_values(data)
+    print values
 
 if __name__ == '__main__':
     main()
