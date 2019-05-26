@@ -20,12 +20,14 @@ def get_request(info_list,key):
 
 def get_jsond(response):
     json_data = json.loads(response.text)
-    print json_data
+   
+    return json_data	
 
 def get_weather(info_list):
     key = get_apik()
     response = get_request(info_list,key)
-    get_jsond(response)
+    data = get_jsond(response)
+    return data
 
 
 
