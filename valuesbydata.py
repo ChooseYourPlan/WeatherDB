@@ -13,6 +13,6 @@ def get_values(data):
     currently_time = unixtimetotime(currently_time)
     summary = data['currently']['summary']
     #preciptype = data['currently']['precipType']
-    temperature = data['currently']['temperature']
+    temperature = ((data['currently']['temperature'] - 32) / 1.8)
     values = [latitude,longitude,summary,temperature,currently_time]
     return values 
