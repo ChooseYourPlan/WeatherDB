@@ -65,7 +65,7 @@ def main():
     ausgabe(info_list)
     data = wl.get_weather(info_list)
     values = vbd.get_values(data)
-    print values
+    print values, city
 
 if __name__ == '__main__':
     main()
