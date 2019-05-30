@@ -4,6 +4,13 @@ def unixtimetotime(time):
     ts = int(time)
     return datetime.utcfromtimestamp(ts).strftime('%Y-%m-%d %H:%M:%S')
 
+def valid_date(time):
+    try:
+        return datetime.strptime(time, "%Y-%m-%d %H:%M")
+    except ValueError:
+        msg = "Not a valid date: '{0}'.".format(time)
+        raise argparse.ArgumentTypeError(msg)
+
 def fahrtocels(fahr):
     return (fahr - 32) / 1.8
 
@@ -20,7 +27,8 @@ def get_values(data):
     currently_temperature = fahrtocels(data['currently']['temperature'])
     currently_apparentTemperature = fahrtocels(data['currently']['apparentTemperature'])
     currently_humidity = data['currently']['humidity'] 
-    currently_pressure = data['currently']['pressure']
+   # currently_pressure = data['currently']['pressure']
+    currently_pressure = 5
     currently_windSpeed = data['currently']['windSpeed']
     currently_cloudCover = data['currently']['cloudCover']
     currently_visibility = data['currently']['visibility']
