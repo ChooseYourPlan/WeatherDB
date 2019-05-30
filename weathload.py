@@ -11,8 +11,10 @@ def get_apik():
 
 def get_date(args):
     d = datetime.strptime(args.date,"%d/%m/%y %H:%M")
-    unixtime = time.mktime(d.timetuple())
-    print unixtime
+    unixtime = str(time.mktime(d.timetuple()))
+    unixtime = unixtime[:-2]
+    print unixtime 
+    return unixtime
 
 def get_request(info_list,key,args):
     lat = info_list[1]
@@ -21,13 +23,10 @@ def get_request(info_list,key,args):
     key = key[:-1] 
    
     if not args.date:
-       response = "https://api.darksky.net/forecast/" + key + "/" + str(lat) + "," + str(lng)
+       response = requests.get("https://api.darksky.net/forecast/" + key + "/" + str(lat) + "," + str(lng))
     else:
-       response = "https://api.darksky.net/forecast/" + key + "/" + str(lat) + "," + str(lng) + "," + get_date(args)   
+       response = requests.get("https://api.darksky.net/forecast/" + key + "/" + str(lat) + "," + str(lng) + "," + get_date(args))
 
- 
-    response = requests.get("https://api.darksky.net/forecast/" + key + "/" + str(lat) +  "," + str(lng)) 
-   
     return response
 
 def get_jsond(response):
