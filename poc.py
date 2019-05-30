@@ -30,6 +30,8 @@ parser.add_argument('-SN','--Sachsen',dest = 'SN',action = 'store_true', help = 
 parser.add_argument('-ST','--Sachsen-Anhalt',dest = 'ST',action = 'store_true', help = 'Sachsen-Anhalt')
 parser.add_argument('-SH','--Schleswig-Holstein',dest = 'SH',action = 'store_true', help = 'Schleswig-Holstein')
 parser.add_argument('-TH','--Thueringen',dest = 'TH',action = 'store_true', help = 'Thueringen')
+parser.add_argument('-D', '--date',dest = 'date', help="Date format YYYY-MM-DD HH:MM")
+
 
 def get_request(city,state,key):
 #Get-Request for lat and lng
@@ -63,7 +65,7 @@ def main():
     response = get_request(city,state,key) 
     info_list = get_jsond(response)
     ausgabe(info_list)
-    data = wl.get_weather(info_list)
+    data = wl.get_weather(info_list,args)
     values = vbd.get_values(data)
     print values, city
 
