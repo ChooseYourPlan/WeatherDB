@@ -49,14 +49,6 @@ def get_jsond(response):
     info_list = [bundesland,lat,lng];
     return info_list
 
-def ausgabe(info_list):
-#Print to console
-   print info_list[0]
-   print info_list[1]
-   print info_list[2]
-
-
-
 def main():
     key = get_apik()
     args = parser.parse_args()
@@ -64,7 +56,6 @@ def main():
     state = stba.get_state(args) 
     response = get_request(city,state,key) 
     info_list = get_jsond(response)
-    ausgabe(info_list)
     data = wl.get_weather(info_list,args)
     values = vbd.get_values(data)
     print values, city
