@@ -10,7 +10,7 @@ def get_apik():
     return key
 
 def get_date(args):
-    d = datetime.strptime(args.date,"%d/%m/%y %H:%M")
+    d = datetime.strptime(args.date,"%d-%m-%Y/%H:%M")
     unixtime = str(time.mktime(d.timetuple()))
     unixtime = unixtime[:-2]
     print unixtime 
@@ -31,7 +31,7 @@ def get_request(info_list,key,args):
 
 def get_jsond(response):
     json_data = json.loads(response.text)
-   
+    print json_data 
     return json_data	
 
 def get_weather(info_list,args):
