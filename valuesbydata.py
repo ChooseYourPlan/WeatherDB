@@ -25,25 +25,21 @@ def get_values(data):
     longitude = data['longitude']
     timezone = data['timezone'] 
 
-    #currently
+    #currently 
     currently_time = data['currently']['time']
     currently_time = unixtimetotime(currently_time)
-    currently_summary = data['currently']['summary']
-    #preciptype = data['currently']['precipType']
-    currently_temperature = fahrtocels(data['currently']['temperature'])
-    currently_apparentTemperature = fahrtocels(data['currently']['apparentTemperature'])
-    currently_humidity = data['currently']['humidity'] 
-   # currently_pressure = data['currently']['pressure']
-    currently_pressure = 5
-    currently_windSpeed = data['currently']['windSpeed']
-    currently_cloudCover = data['currently']['cloudCover']
-    currently_visibility = checkjsonkey(data,'currently','visibility')
-  
+    currently_summary = checkjsonkey(data,'currently','summary')
+    preciptype = checkjsonkey(data,'currently','precipType')
+    currently_temperature = fahrtocels(checkjsonkey(data,'currently','temperature'))
+    currently_apparentTemperature = fahrtocels(checkjsonkey(data,'currently','apparentTemperature'))
+    currently_humidity = checkjsonkey(data,'currently','humidity')
+    currently_pressure = checkjsonkey(data,'currently','pressure')
+    currently_windSpeed = checkjsonkey(data,'currently','windSpeed')
+    currently_cloudCover = checkjsonkey(data,'currently','cloudCover',)
+    currently_visibility = checkjsonkey(data,'currently','visibility')                                                               
 
     values = [latitude,longitude,timezone,
-    currently_summary,currently_temperature,currently_time,currently_apparentTemperature,currently_humidity,currently_pressure,currently_windSpeed,currently_cloudCover,currently_visibility
-    
-    
-
-    ]
+    currently_summary,currently_temperature,currently_time,
+    currently_apparentTemperature,currently_humidity,currently_pressure,            currently_windSpeed,currently_cloudCover,currently_visibility]
+         
     return values 
