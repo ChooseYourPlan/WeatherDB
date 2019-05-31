@@ -14,6 +14,12 @@ def valid_date(time):
 def fahrtocels(fahr):
     return (fahr - 32) / 1.8
 
+def checkjsonkey(data,loc,key):
+    if key in data[loc]:
+        return data[loc][key]
+    else:
+        return 0
+       
 def get_values(data):
     latitude = data['latitude']
     longitude = data['longitude']
@@ -31,7 +37,7 @@ def get_values(data):
     currently_pressure = 5
     currently_windSpeed = data['currently']['windSpeed']
     currently_cloudCover = data['currently']['cloudCover']
-    currently_visibility = data['currently']['visibility']
+    currently_visibility = checkjsonkey(data,'currently','visibility')
   
 
     values = [latitude,longitude,timezone,
