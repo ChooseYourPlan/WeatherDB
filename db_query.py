@@ -23,5 +23,3 @@ def insert_db(values):
 
          cursor.execute(sql) 
          connection.commit()
-         result = cursor.fetchone()
-         print result
