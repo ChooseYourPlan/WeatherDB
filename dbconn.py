@@ -9,5 +9,6 @@ def get_connection():
     database = temp[7]
 
     myConnection = pymysql.connect( host=hostname, user=username, passwd=password, db=database )
+
     return myConnection
 
