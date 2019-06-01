@@ -12,14 +12,17 @@ def insert_db(values):
          cursor.execute(sql)
            
          sql = "INSERT INTO wetter VALUES ("
+            
+         for list in values:
+             for value in list: 
+                  if isinstance(value,basestring):
+                      sql = sql + "'" + value + "',"
+                  else:
+                      sql = sql + str(value) + ","
 
-         for value in values:
-             if isinstance(value,basestring):
-                 sql = sql + "'" + value + "',"
-             else:
-                 sql = sql + str(value) + ","
-
-         sql = sql[:-1] +  ");"
+             sql = sql[:-1] +  "),("
+         
+         sql = sql[:-2] + ";"
 
          cursor.execute(sql) 
          connection.commit()
