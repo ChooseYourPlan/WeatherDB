@@ -4,6 +4,7 @@ import argparse
 import statebyargs as stba
 import weathload as wl
 import valuesbydata as vbd
+import db_query as dbq
 
 def get_apik():
 #Get Api-Key from File
@@ -58,6 +59,7 @@ def main():
     info_list = get_jsond(response)
     data = wl.get_weather(info_list,args)
     values = vbd.get_values(data)
+    dbq.insert_db(values)
     print values, city
 
 if __name__ == '__main__':
