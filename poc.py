@@ -32,7 +32,7 @@ parser.add_argument('-ST','--Sachsen-Anhalt',dest = 'ST',action = 'store_true', 
 parser.add_argument('-SH','--Schleswig-Holstein',dest = 'SH',action = 'store_true', help = 'Schleswig-Holstein')
 parser.add_argument('-TH','--Thueringen',dest = 'TH',action = 'store_true', help = 'Thueringen')
 parser.add_argument('-D', '--date',dest = 'date', help="Date format YYYY-MM-DD HH:MM")
-
+parser.add_argument('-H','--Hourly',dest = 'H', help = 'Hourly Report for 1 Year', action = 'store_true')
 
 def get_request(city,state,key):
 #Get-Request for lat and lng
@@ -47,8 +47,23 @@ def get_jsond(response):
     lat  = json_data['results'][0]['locations'][0]['latLng']['lat']
     lng  = json_data['results'][0]['locations'][0]['latLng']['lng']
 
-    info_list = [bundesland,lat,lng];
+    info_list = [bundesland,lat,lng]
     return info_list
+
+def getter(args,info_list):
+    if args.H:
+       values = []
+       for j in range(0,10):
+           data = wl.get_weather(info_list,args,j)
+           for x in range(1,24):
+               value = vbd.get_values(data,x)
+               values.append(value) 
+    else:
+       data = wl.get_weather(info_list,args)
+       values = vbd.get_values(data)
+       values = [values]
+       return values
+    return values
 
 def main():
     key = get_apik()
@@ -57,8 +72,7 @@ def main():
     state = stba.get_state(args) 
     response = get_request(city,state,key) 
     info_list = get_jsond(response)
-    data = wl.get_weather(info_list,args)
-    values = vbd.get_values(data)
+    values = getter(args,info_list)
     dbq.insert_db(values)
     print values, city
 
