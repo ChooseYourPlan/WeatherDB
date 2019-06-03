@@ -7,7 +7,7 @@ def insert_db(values):
     with connection.cursor() as cursor:
          sql = "DROP TABLE IF EXISTS wetter"
          cursor.execute(sql)
-         sql = "CREATE TABLE wetter (latitude float NOT NULL,longtitude float NOT NULL,timezone VARCHAR(60) NOT NULL, currently_summary VARCHAR(120),currently_temperature float NOT NULL ,currently_time VARCHAR(30),currently_apparentTemperature float, cuurently_humidity float, currently_pressure float, currently_windSpeed float, currently_cloudCover float, currently_visibility float);"
+         sql = "CREATE TABLE wetter (latitude float NOT NULL,longtitude float NOT NULL,timezone VARCHAR(60) NOT NULL, summary VARCHAR(120),icon VARCHAR(25),preciptype VARCHAR(25),temperature float NOT NULL ,time VARCHAR(30),apparentTemperature float, cuurently_humidity float, dewPoint float, windSpeed float, cloudCover float, visibility float, uvIndex float);"
         
          cursor.execute(sql)
            
