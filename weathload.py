@@ -9,14 +9,13 @@ def get_apik():
     key = key_file.read()
     return key
 
-def get_date(args):
-    d = datetime.strptime(args.date,"%d-%m-%Y/%H:%M")
+def get_date(args,offset = 0):
+    d = datetime.strptime(args.date,"%Y")
     unixtime = str(time.mktime(d.timetuple()))
     unixtime = unixtime[:-2]
-    print unixtime 
-    return unixtime
+    return int(unixtime) + 7200 + (offset * 86400)
 
-def get_request(info_list,key,args):
+def get_request(info_list,key,args,offset):
     lat = info_list[1]
     lng = info_list[2]
    
@@ -25,17 +24,16 @@ def get_request(info_list,key,args):
     if not args.date:
        response = requests.get("https://api.darksky.net/forecast/" + key + "/" + str(lat) + "," + str(lng))
     else:
-       response = requests.get("https://api.darksky.net/forecast/" + key + "/" + str(lat) + "," + str(lng) + "," + get_date(args))
+       response = requests.get("https://api.darksky.net/forecast/" + key + "/" + str(lat) + "," + str(lng) + "," + str(get_date(args,offset)))
 
     return response
 
 def get_jsond(response):
     json_data = json.loads(response.text)
-    print json_data 
     return json_data	
 
-def get_weather(info_list,args):
+def get_weather(info_list,args,offset = 0):
     key = get_apik()
-    response = get_request(info_list,key,args)
+    response = get_request(info_list,key,args,offset)
     data = get_jsond(response)
     return data
