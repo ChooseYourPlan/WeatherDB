@@ -51,6 +51,7 @@ def get_jsond(response):
     return info_list
 
 def getter(args,info_list):
+#Getter method (moved from Main)
     if args.H:
        values = []
        for j in range(0,10):
