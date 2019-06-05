@@ -67,6 +67,7 @@ def getter(args,info_list):
     return values
 
 def main():
+#Main method
     key = get_apik()
     args = parser.parse_args()
     city = args.city
