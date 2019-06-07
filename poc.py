@@ -54,9 +54,9 @@ def getter(args,info_list):
 #Getter method (moved from Main)
     if args.H:
        values = []
-       for j in range(0,10):
+       for j in range(0,364):
            data = wl.get_weather(info_list,args,j)
-           for x in range(1,24):
+           for x in range(1,23):
                value = vbd.get_values(data,x)
                values.append(value) 
     else:
