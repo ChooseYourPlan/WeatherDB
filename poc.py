@@ -33,6 +33,7 @@ parser.add_argument('-SH','--Schleswig-Holstein',dest = 'SH',action = 'store_tru
 parser.add_argument('-TH','--Thueringen',dest = 'TH',action = 'store_true', help = 'Thueringen')
 parser.add_argument('-D', '--date',dest = 'date', help="Date format YYYY-MM-DD HH:MM")
 parser.add_argument('-H','--Hourly',dest = 'H', help = 'Hourly Report for 1 Year', action = 'store_true')
+parser.add_argument('a','--attach',dest = 'a', action = 'store_true', help = 'attach returning values to existing db "wetter"')
 
 def get_request(city,state,key):
 #Get-Request for lat and lng
@@ -54,7 +55,7 @@ def getter(args,info_list):
 #Getter method (moved from Main)
     if args.H:
        values = []
-       for j in range(0,364):
+       for j in range(0,365):
            data = wl.get_weather(info_list,args,j)
            for x in range(1,23):
                value = vbd.get_values(data,x)
